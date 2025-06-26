@@ -1,0 +1,177 @@
+import React from 'react';
+import Link from 'next/link';
+import ContentCard from '@/components/shared/content-card';
+
+interface Review {
+  id: string;
+  slug: string;
+  title: string;
+  content: string;
+  type: 'review';
+  cover_image: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export default async function ReviewsPage() {
+  // 在实际应用中，我们会从数据库获取测评数据
+  // 这里使用模拟数据
+  const mockReviews: Review[] = [
+    {
+      id: '1',
+      slug: 'review-1',
+      title: '2023年最值得购买的5款机械键盘',
+      content: '机械键盘市场竞争激烈，本文将为您详细介绍2023年最值得购买的5款机械键盘...',
+      type: 'review',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '2',
+      slug: 'review-2',
+      title: '办公椅选购指南：如何选择适合自己的办公椅',
+      content: '一张好的办公椅对于长时间工作的人来说至关重要，本文将为您介绍如何选择适合自己的办公椅...',
+      type: 'review',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '3',
+      slug: 'review-3',
+      title: '轻薄笔记本横评：性能与便携的平衡',
+      content: '轻薄笔记本如何在性能和便携性之间取得平衡？本文将对市面上主流的轻薄笔记本进行横评...',
+      type: 'review',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '4',
+      slug: 'review-4',
+      title: '无线耳机音质大比拼',
+      content: '随着技术的进步，无线耳机的音质已经接近甚至超越有线耳机，本文将对几款热门无线耳机进行音质测试...',
+      type: 'review',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '5',
+      slug: 'review-5',
+      title: '智能手表功能对比：哪款最适合日常使用？',
+      content: '市面上的智能手表功能各异，价格差异也很大，本文将帮助您找到最适合日常使用的智能手表...',
+      type: 'review',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '6',
+      slug: 'review-6',
+      title: '专业摄影器材入门指南',
+      content: '对于摄影爱好者来说，选择合适的器材是提高摄影水平的重要一步，本文将为您提供专业摄影器材入门指南...',
+      type: 'review',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    }
+  ];
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-2">产品测评</h1>
+        <p className="text-gray-600">专业、客观的产品测评，帮助您做出明智的购买决策</p>
+      </div>
+
+      {/* 筛选器 */}
+      <div className="mb-8 p-4 bg-gray-50 rounded-lg">
+        <div className="flex flex-wrap gap-4">
+          <div className="flex-1">
+            <label htmlFor="sort" className="block text-sm font-medium text-gray-700 mb-1">排序方式</label>
+            <select
+              id="sort"
+              className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              defaultValue="newest"
+            >
+              <option value="newest">最新发布</option>
+              <option value="oldest">最早发布</option>
+              <option value="az">标题 A-Z</option>
+              <option value="za">标题 Z-A</option>
+            </select>
+          </div>
+          <div className="flex-1">
+            <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">类别</label>
+            <select
+              id="category"
+              className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              defaultValue="all"
+            >
+              <option value="all">全部类别</option>
+              <option value="electronics">电子产品</option>
+              <option value="furniture">家具</option>
+              <option value="accessories">配件</option>
+            </select>
+          </div>
+          <div className="flex-1">
+            <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">搜索</label>
+            <input
+              type="text"
+              id="search"
+              placeholder="搜索测评..."
+              className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 测评列表 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {mockReviews.map((review) => (
+          <ContentCard
+            key={review.id}
+            id={review.id}
+            slug={review.slug}
+            title={review.title}
+            excerpt={review.content}
+            coverImage={review.cover_image}
+            createdAt={review.created_at}
+            type={review.type}
+          />
+        ))}
+      </div>
+
+      {/* 分页 */}
+      <div className="mt-8 flex justify-center">
+        <nav className="inline-flex rounded-md shadow">
+          <a
+            href="#"
+            className="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+          >
+            上一页
+          </a>
+          <a
+            href="#"
+            className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-blue-600 hover:bg-gray-50"
+          >
+            1
+          </a>
+          <a
+            href="#"
+            className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+          >
+            2
+          </a>
+          <a
+            href="#"
+            className="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+          >
+            下一页
+          </a>
+        </nav>
+      </div>
+    </div>
+  );
+} 

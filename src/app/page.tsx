@@ -36,6 +36,16 @@ export default async function Home() {
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
+    },
+    {
+      id: '4',
+      slug: 'product-4',
+      title: '无线蓝牙耳机',
+      content: '这款无线蓝牙耳机采用最新蓝牙5.2技术，提供稳定连接和高品质音频体验...',
+      type: 'product' as const,
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     }
   ];
 
@@ -65,6 +75,16 @@ export default async function Home() {
       slug: 'review-3',
       title: '轻薄笔记本横评：性能与便携的平衡',
       content: '轻薄笔记本如何在性能和便携性之间取得平衡？本文将对市面上主流的轻薄笔记本进行横评...',
+      type: 'review' as const,
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '4',
+      slug: 'review-4',
+      title: '无线耳机音质大比拼',
+      content: '随着技术的进步，无线耳机的音质已经接近甚至超越有线耳机，本文将对几款热门无线耳机进行音质测试...',
       type: 'review' as const,
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
@@ -105,7 +125,7 @@ export default async function Home() {
               查看全部 &rarr;
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {mockProducts.map((product) => (
               <ContentCard
                 key={product.id}
@@ -131,7 +151,7 @@ export default async function Home() {
               查看全部 &rarr;
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {mockReviews.map((review) => (
               <ContentCard
                 key={review.id}
@@ -144,42 +164,6 @@ export default async function Home() {
                 type={review.type}
               />
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 价值主张 */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">为什么选择我们</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">专业测评</h3>
-              <p className="text-gray-600">我们提供专业、客观的产品测评，帮助您做出明智的购买决策。</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">详细信息</h3>
-              <p className="text-gray-600">我们提供全面的产品信息，包括规格、功能、优缺点等，让您全面了解产品。</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">用户评论</h3>
-              <p className="text-gray-600">我们鼓励用户分享自己的使用体验，帮助其他用户做出更好的选择。</p>
-            </div>
           </div>
         </div>
       </section>

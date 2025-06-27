@@ -76,6 +76,66 @@ export default async function ProductsPage() {
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
+    },
+    {
+      id: '7',
+      slug: 'product-7',
+      title: '高性能游戏鼠标',
+      content: '这款游戏鼠标采用高精度传感器，最高16000 DPI，8个可编程按钮，适合各类游戏玩家...',
+      type: 'product',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '8',
+      slug: 'product-8',
+      title: '4K超高清显示器',
+      content: '这款4K显示器拥有出色的色彩还原和锐利的图像质量，适合专业设计和日常办公使用...',
+      type: 'product',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '9',
+      slug: 'product-9',
+      title: '便携式移动电源',
+      content: '这款移动电源容量高达20000mAh，支持快充技术，可同时为多台设备充电...',
+      type: 'product',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '10',
+      slug: 'product-10',
+      title: '无线充电底座',
+      content: '这款无线充电底座支持多设备同时充电，兼容各种支持无线充电的手机和耳机...',
+      type: 'product',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '11',
+      slug: 'product-11',
+      title: '智能家居控制中心',
+      content: '这款智能家居控制中心可以连接并控制家中各种智能设备，支持语音控制和远程操作...',
+      type: 'product',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '12',
+      slug: 'product-12',
+      title: '便携式蓝牙音箱',
+      content: '这款蓝牙音箱音质出众，电池续航长达24小时，防水设计让您在各种环境中都能享受音乐...',
+      type: 'product',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     }
   ];
 
@@ -128,7 +188,7 @@ export default async function ProductsPage() {
       </div>
 
       {/* 产品列表 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {mockProducts.map((product) => (
           <ContentCard
             key={product.id}

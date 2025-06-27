@@ -76,6 +76,66 @@ export default async function ReviewsPage() {
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
+    },
+    {
+      id: '7',
+      slug: 'review-7',
+      title: '游戏鼠标选购攻略：如何选择最适合自己的游戏鼠标',
+      content: '一款好的游戏鼠标可以显著提升游戏体验，本文将从传感器、按键、人体工学等多个方面为您介绍如何选择游戏鼠标...',
+      type: 'review',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '8',
+      slug: 'review-8',
+      title: '4K显示器横评：哪款更适合专业设计工作',
+      content: '对于设计师来说，一台色彩准确、分辨率高的显示器至关重要，本文将对市面上主流的4K显示器进行专业测评...',
+      type: 'review',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '9',
+      slug: 'review-9',
+      title: '移动电源选购指南：容量、快充、安全性全面分析',
+      content: '随着智能设备的普及，移动电源已成为必备配件，本文将从容量、快充技术、安全性等方面为您详细分析如何选择移动电源...',
+      type: 'review',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '10',
+      slug: 'review-10',
+      title: '无线充电技术发展与产品对比',
+      content: '无线充电技术正在快速发展，本文将介绍当前主流的无线充电技术标准，并对市面上热门的无线充电产品进行对比测评...',
+      type: 'review',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '11',
+      slug: 'review-11',
+      title: '智能家居系统对比：哪个平台更适合普通家庭',
+      content: '随着智能家居的普及，选择一个合适的智能家居系统变得越来越重要，本文将对主流的智能家居平台进行详细对比...',
+      type: 'review',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: '12',
+      slug: 'review-12',
+      title: '便携蓝牙音箱音质测试：小身材大音质',
+      content: '便携蓝牙音箱因其便携性和不错的音质受到越来越多人的喜爱，本文将对市面上热门的便携蓝牙音箱进行专业音质测试...',
+      type: 'review',
+      cover_image: '/placeholder-image.jpg',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     }
   ];
 
@@ -128,7 +188,7 @@ export default async function ReviewsPage() {
       </div>
 
       {/* 测评列表 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {mockReviews.map((review) => (
           <ContentCard
             key={review.id}
@@ -164,6 +224,15 @@ export default async function ReviewsPage() {
           >
             2
           </a>
+          <a
+            href="#"
+            className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+          >
+            3
+          </a>
+          <span className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700">
+            ...
+          </span>
           <a
             href="#"
             className="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"

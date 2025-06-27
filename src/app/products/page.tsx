@@ -1,169 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import ContentCard from '@/components/shared/content-card';
-
-interface Product {
-  id: string;
-  slug: string;
-  title: string;
-  content: string;
-  type: 'product';
-  cover_image: string;
-  created_at: string;
-  updated_at: string;
-  brand?: string;
-  tags?: string[];
-}
+import { getContentsByType } from '@/lib/api';
+import { Content } from '@/types';
 
 export default async function ProductsPage() {
-  // 在实际应用中，我们会从数据库获取产品数据
-  // 这里使用模拟数据
-  const mockProducts: Product[] = [
-    {
-      id: '1',
-      slug: 'product-1',
-      title: '高品质机械键盘',
-      content: '这是一款高品质的机械键盘，采用Cherry MX轴体，带来极佳的打字体验...',
-      type: 'product',
-      cover_image: '/placeholder-image.jpg',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      brand: '达尔优',
-      tags: ['机械键盘', '外设', '办公']
-    },
-    {
-      id: '2',
-      slug: 'product-2',
-      title: '人体工学办公椅',
-      content: '这款人体工学办公椅采用优质材料，支持多角度调节，让您的办公更加舒适...',
-      type: 'product',
-      cover_image: '/placeholder-image.jpg',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      brand: '西昊',
-      tags: ['办公椅', '人体工学', '办公家具']
-    },
-    {
-      id: '3',
-      slug: 'product-3',
-      title: '超薄笔记本电脑',
-      content: '这款笔记本电脑采用全金属机身，厚度仅为15mm，配备高性能处理器和大容量电池...',
-      type: 'product',
-      cover_image: '/placeholder-image.jpg',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      brand: '联想',
-      tags: ['笔记本电脑', '轻薄本', '数码']
-    },
-    {
-      id: '4',
-      slug: 'product-4',
-      title: '无线蓝牙耳机',
-      content: '这款无线蓝牙耳机采用最新蓝牙5.2技术，提供稳定连接和高品质音频体验...',
-      type: 'product',
-      cover_image: '/placeholder-image.jpg',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      brand: '索尼',
-      tags: ['无线耳机', '音频设备', '蓝牙']
-    },
-    {
-      id: '5',
-      slug: 'product-5',
-      title: '智能手表',
-      content: '这款智能手表配备高清AMOLED显示屏，支持心率监测、睡眠追踪等多种健康功能...',
-      type: 'product',
-      cover_image: '/placeholder-image.jpg',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      brand: '华为',
-      tags: ['智能手表', '可穿戴设备', '健康监测']
-    },
-    {
-      id: '6',
-      slug: 'product-6',
-      title: '专业摄影三脚架',
-      content: '这款专业摄影三脚架采用碳纤维材质，轻便坚固，适合各种拍摄场景...',
-      type: 'product',
-      cover_image: '/placeholder-image.jpg',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      brand: '曼富图',
-      tags: ['摄影器材', '三脚架', '相机配件']
-    },
-    {
-      id: '7',
-      slug: 'product-7',
-      title: '高性能游戏鼠标',
-      content: '这款游戏鼠标采用高精度传感器，最高16000 DPI，8个可编程按钮，适合各类游戏玩家...',
-      type: 'product',
-      cover_image: '/placeholder-image.jpg',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      brand: '罗技',
-      tags: ['游戏鼠标', '外设', '游戏']
-    },
-    {
-      id: '8',
-      slug: 'product-8',
-      title: '4K超高清显示器',
-      content: '这款4K显示器拥有出色的色彩还原和锐利的图像质量，适合专业设计和日常办公使用...',
-      type: 'product',
-      cover_image: '/placeholder-image.jpg',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      brand: '戴尔',
-      tags: ['显示器', '4K', '设计']
-    },
-    {
-      id: '9',
-      slug: 'product-9',
-      title: '便携式移动电源',
-      content: '这款移动电源容量高达20000mAh，支持快充技术，可同时为多台设备充电...',
-      type: 'product',
-      cover_image: '/placeholder-image.jpg',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      brand: '安克',
-      tags: ['移动电源', '充电设备', '快充']
-    },
-    {
-      id: '10',
-      slug: 'product-10',
-      title: '无线充电底座',
-      content: '这款无线充电底座支持多设备同时充电，兼容各种支持无线充电的手机和耳机...',
-      type: 'product',
-      cover_image: '/placeholder-image.jpg',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      brand: '倍思',
-      tags: ['无线充电', '充电设备', '手机配件']
-    },
-    {
-      id: '11',
-      slug: 'product-11',
-      title: '智能家居控制中心',
-      content: '这款智能家居控制中心可以连接并控制家中各种智能设备，支持语音控制和远程操作...',
-      type: 'product',
-      cover_image: '/placeholder-image.jpg',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      brand: '小米',
-      tags: ['智能家居', '物联网', '家庭自动化']
-    },
-    {
-      id: '12',
-      slug: 'product-12',
-      title: '便携式蓝牙音箱',
-      content: '这款蓝牙音箱音质出众，电池续航长达24小时，防水设计让您在各种环境中都能享受音乐...',
-      type: 'product',
-      cover_image: '/placeholder-image.jpg',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      brand: 'JBL',
-      tags: ['蓝牙音箱', '音频设备', '便携']
-    }
-  ];
+  // 使用 API 服务获取产品数据
+  const response = await getContentsByType('product', { limit: 12 });
+  const products = response.data;
+  const pagination = response.pagination;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -230,7 +75,7 @@ export default async function ProductsPage() {
 
       {/* 产品列表 */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {mockProducts.map((product) => (
+        {products.map((product) => (
           <ContentCard
             key={product.id}
             id={product.id}
@@ -247,49 +92,56 @@ export default async function ProductsPage() {
       </div>
 
       {/* 分页 */}
-      <div className="mt-8 flex justify-center">
-        <nav className="inline-flex rounded-md shadow">
-          <a
-            href="#"
-            className="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-          >
-            上一页
-          </a>
-          <a
-            href="#"
-            className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-blue-600 hover:bg-gray-50"
-          >
-            1
-          </a>
-          <a
-            href="#"
-            className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-          >
-            2
-          </a>
-          <a
-            href="#"
-            className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-          >
-            3
-          </a>
-          <span className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700">
-            ...
-          </span>
-          <a
-            href="#"
-            className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-          >
-            8
-          </a>
-          <a
-            href="#"
-            className="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-          >
-            下一页
-          </a>
-        </nav>
-      </div>
+      {pagination && (
+        <div className="mt-8 flex justify-center">
+          <nav className="inline-flex rounded-md shadow">
+            <a
+              href="#"
+              className={`px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium ${
+                pagination.page <= 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-50'
+              }`}
+            >
+              上一页
+            </a>
+            
+            {Array.from({ length: Math.min(pagination.totalPages, 3) }, (_, i) => (
+              <a
+                key={i}
+                href="#"
+                className={`px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium ${
+                  i + 1 === pagination.page ? 'text-blue-600' : 'text-gray-500 hover:bg-gray-50'
+                }`}
+              >
+                {i + 1}
+              </a>
+            ))}
+            
+            {pagination.totalPages > 3 && (
+              <span className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700">
+                ...
+              </span>
+            )}
+            
+            {pagination.totalPages > 3 && (
+              <a
+                href="#"
+                className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              >
+                {pagination.totalPages}
+              </a>
+            )}
+            
+            <a
+              href="#"
+              className={`px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium ${
+                pagination.page >= pagination.totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-50'
+              }`}
+            >
+              下一页
+            </a>
+          </nav>
+        </div>
+      )}
     </div>
   );
 } 

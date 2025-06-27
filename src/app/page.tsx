@@ -13,7 +13,7 @@ export default async function Home() {
   const reviews = reviewsResponse.data;
 
   return (
-    <main>
+    <div>
       {/* 英雄区 */}
       <section className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white py-20">
         <div className="container mx-auto px-4 text-center">
@@ -92,6 +92,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

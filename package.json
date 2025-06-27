@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:init": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 node -r dotenv/config ./scripts/init-db.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.2",
@@ -23,10 +24,14 @@
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
+    "@types/pg": "^8.11.6",
     "@types/react-dom": "^19",
+    "dotenv": "^16.4.5",
     "eslint": "^9",
+    "pg": "^8.12.0",
     "eslint-config-next": "15.3.4",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "cross-env": "^7.0.3"
   }
 }

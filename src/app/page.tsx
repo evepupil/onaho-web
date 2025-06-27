@@ -15,7 +15,9 @@ export default async function Home() {
       type: 'product' as const,
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '达尔优',
+      tags: ['机械键盘', '外设', '办公']
     },
     {
       id: '2',
@@ -25,7 +27,9 @@ export default async function Home() {
       type: 'product' as const,
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '西昊',
+      tags: ['办公椅', '人体工学', '办公家具']
     },
     {
       id: '3',
@@ -35,7 +39,9 @@ export default async function Home() {
       type: 'product' as const,
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '联想',
+      tags: ['笔记本电脑', '轻薄本', '数码']
     },
     {
       id: '4',
@@ -45,7 +51,9 @@ export default async function Home() {
       type: 'product' as const,
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '索尼',
+      tags: ['无线耳机', '音频设备', '蓝牙']
     }
   ];
 
@@ -58,7 +66,10 @@ export default async function Home() {
       type: 'review' as const,
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 4.5,
+      brand: '多品牌对比',
+      tags: ['机械键盘', '外设', '办公']
     },
     {
       id: '2',
@@ -68,7 +79,10 @@ export default async function Home() {
       type: 'review' as const,
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 5,
+      brand: '多品牌对比',
+      tags: ['办公椅', '人体工学', '办公家具']
     },
     {
       id: '3',
@@ -78,7 +92,10 @@ export default async function Home() {
       type: 'review' as const,
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 4,
+      brand: '多品牌对比',
+      tags: ['笔记本电脑', '轻薄本', '数码']
     },
     {
       id: '4',
@@ -88,7 +105,10 @@ export default async function Home() {
       type: 'review' as const,
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 4.5,
+      brand: '多品牌对比',
+      tags: ['无线耳机', '音频设备', '蓝牙']
     }
   ];
 
@@ -136,6 +156,8 @@ export default async function Home() {
                 coverImage={product.cover_image}
                 createdAt={product.created_at}
                 type={product.type}
+                brand={product.brand}
+                tags={product.tags}
               />
             ))}
           </div>
@@ -162,6 +184,9 @@ export default async function Home() {
                 coverImage={review.cover_image}
                 createdAt={review.created_at}
                 type={review.type}
+                brand={review.brand}
+                tags={review.tags}
+                rating={review.rating}
               />
             ))}
           </div>

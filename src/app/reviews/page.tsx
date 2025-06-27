@@ -11,6 +11,9 @@ interface Review {
   cover_image: string;
   created_at: string;
   updated_at: string;
+  brand?: string;
+  tags?: string[];
+  rating?: number;
 }
 
 export default async function ReviewsPage() {
@@ -25,7 +28,10 @@ export default async function ReviewsPage() {
       type: 'review',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 4.5,
+      brand: '多品牌对比',
+      tags: ['机械键盘', '外设', '办公']
     },
     {
       id: '2',
@@ -35,7 +41,10 @@ export default async function ReviewsPage() {
       type: 'review',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 5,
+      brand: '多品牌对比',
+      tags: ['办公椅', '人体工学', '办公家具']
     },
     {
       id: '3',
@@ -45,7 +54,10 @@ export default async function ReviewsPage() {
       type: 'review',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 4,
+      brand: '多品牌对比',
+      tags: ['笔记本电脑', '轻薄本', '数码']
     },
     {
       id: '4',
@@ -55,7 +67,10 @@ export default async function ReviewsPage() {
       type: 'review',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 4.5,
+      brand: '多品牌对比',
+      tags: ['无线耳机', '音频设备', '蓝牙']
     },
     {
       id: '5',
@@ -65,7 +80,10 @@ export default async function ReviewsPage() {
       type: 'review',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 3.5,
+      brand: '多品牌对比',
+      tags: ['智能手表', '可穿戴设备', '健康监测']
     },
     {
       id: '6',
@@ -75,7 +93,10 @@ export default async function ReviewsPage() {
       type: 'review',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 5,
+      brand: '多品牌对比',
+      tags: ['摄影器材', '相机', '镜头']
     },
     {
       id: '7',
@@ -85,7 +106,10 @@ export default async function ReviewsPage() {
       type: 'review',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 4,
+      brand: '罗技、雷蛇、赛睿对比',
+      tags: ['游戏鼠标', '外设', '游戏']
     },
     {
       id: '8',
@@ -95,7 +119,10 @@ export default async function ReviewsPage() {
       type: 'review',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 4.5,
+      brand: '戴尔、明基、华硕对比',
+      tags: ['显示器', '4K', '设计工作']
     },
     {
       id: '9',
@@ -105,7 +132,10 @@ export default async function ReviewsPage() {
       type: 'review',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 4,
+      brand: '安克、紫米、倍思对比',
+      tags: ['移动电源', '充电设备', '快充']
     },
     {
       id: '10',
@@ -115,7 +145,10 @@ export default async function ReviewsPage() {
       type: 'review',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 3.5,
+      brand: '多品牌对比',
+      tags: ['无线充电', '充电技术', '手机配件']
     },
     {
       id: '11',
@@ -125,7 +158,10 @@ export default async function ReviewsPage() {
       type: 'review',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 4,
+      brand: '小米、华为、苹果对比',
+      tags: ['智能家居', '物联网', '家庭自动化']
     },
     {
       id: '12',
@@ -135,7 +171,10 @@ export default async function ReviewsPage() {
       type: 'review',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      rating: 4.5,
+      brand: 'JBL、索尼、博士对比',
+      tags: ['蓝牙音箱', '音频设备', '便携']
     }
   ];
 
@@ -160,6 +199,7 @@ export default async function ReviewsPage() {
               <option value="oldest">最早发布</option>
               <option value="az">标题 A-Z</option>
               <option value="za">标题 Z-A</option>
+              <option value="rating">评分最高</option>
             </select>
           </div>
           <div className="flex-1">
@@ -199,6 +239,9 @@ export default async function ReviewsPage() {
             coverImage={review.cover_image}
             createdAt={review.created_at}
             type={review.type}
+            brand={review.brand}
+            tags={review.tags}
+            rating={review.rating}
           />
         ))}
       </div>

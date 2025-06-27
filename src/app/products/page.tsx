@@ -11,6 +11,8 @@ interface Product {
   cover_image: string;
   created_at: string;
   updated_at: string;
+  brand?: string;
+  tags?: string[];
 }
 
 export default async function ProductsPage() {
@@ -25,7 +27,9 @@ export default async function ProductsPage() {
       type: 'product',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '达尔优',
+      tags: ['机械键盘', '外设', '办公']
     },
     {
       id: '2',
@@ -35,7 +39,9 @@ export default async function ProductsPage() {
       type: 'product',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '西昊',
+      tags: ['办公椅', '人体工学', '办公家具']
     },
     {
       id: '3',
@@ -45,7 +51,9 @@ export default async function ProductsPage() {
       type: 'product',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '联想',
+      tags: ['笔记本电脑', '轻薄本', '数码']
     },
     {
       id: '4',
@@ -55,7 +63,9 @@ export default async function ProductsPage() {
       type: 'product',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '索尼',
+      tags: ['无线耳机', '音频设备', '蓝牙']
     },
     {
       id: '5',
@@ -65,7 +75,9 @@ export default async function ProductsPage() {
       type: 'product',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '华为',
+      tags: ['智能手表', '可穿戴设备', '健康监测']
     },
     {
       id: '6',
@@ -75,7 +87,9 @@ export default async function ProductsPage() {
       type: 'product',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '曼富图',
+      tags: ['摄影器材', '三脚架', '相机配件']
     },
     {
       id: '7',
@@ -85,7 +99,9 @@ export default async function ProductsPage() {
       type: 'product',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '罗技',
+      tags: ['游戏鼠标', '外设', '游戏']
     },
     {
       id: '8',
@@ -95,7 +111,9 @@ export default async function ProductsPage() {
       type: 'product',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '戴尔',
+      tags: ['显示器', '4K', '设计']
     },
     {
       id: '9',
@@ -105,7 +123,9 @@ export default async function ProductsPage() {
       type: 'product',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '安克',
+      tags: ['移动电源', '充电设备', '快充']
     },
     {
       id: '10',
@@ -115,7 +135,9 @@ export default async function ProductsPage() {
       type: 'product',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '倍思',
+      tags: ['无线充电', '充电设备', '手机配件']
     },
     {
       id: '11',
@@ -125,7 +147,9 @@ export default async function ProductsPage() {
       type: 'product',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: '小米',
+      tags: ['智能家居', '物联网', '家庭自动化']
     },
     {
       id: '12',
@@ -135,7 +159,9 @@ export default async function ProductsPage() {
       type: 'product',
       cover_image: '/placeholder-image.jpg',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
+      brand: 'JBL',
+      tags: ['蓝牙音箱', '音频设备', '便携']
     }
   ];
 
@@ -176,6 +202,21 @@ export default async function ProductsPage() {
             </select>
           </div>
           <div className="flex-1">
+            <label htmlFor="brand" className="block text-sm font-medium text-gray-700 mb-1">品牌</label>
+            <select
+              id="brand"
+              className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              defaultValue="all"
+            >
+              <option value="all">全部品牌</option>
+              <option value="xiaomi">小米</option>
+              <option value="huawei">华为</option>
+              <option value="logitech">罗技</option>
+              <option value="sony">索尼</option>
+              <option value="jbl">JBL</option>
+            </select>
+          </div>
+          <div className="flex-1">
             <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">搜索</label>
             <input
               type="text"
@@ -199,6 +240,8 @@ export default async function ProductsPage() {
             coverImage={product.cover_image}
             createdAt={product.created_at}
             type={product.type}
+            brand={product.brand}
+            tags={product.tags}
           />
         ))}
       </div>

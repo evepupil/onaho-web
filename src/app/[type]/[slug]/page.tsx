@@ -16,7 +16,8 @@ interface ContentDetailPageProps {
 }
 
 export default async function ContentDetailPage({ params }: ContentDetailPageProps) {
-  const { type, slug } = params;
+
+    const { type, slug } = await params;
   
   // 验证类型是否有效
   if (type !== 'product' && type !== 'review') {
@@ -111,4 +112,4 @@ export default async function ContentDetailPage({ params }: ContentDetailPagePro
     console.error('获取内容详情失败:', error);
     notFound();
   }
-} 
+}

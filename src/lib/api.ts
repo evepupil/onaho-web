@@ -49,7 +49,13 @@ interface ContentQueryParams {
 /**
  * API 基础 URL
  */
-const API_BASE_URL = '/api';
+const getBaseUrl = () => {
+  if (typeof window !== 'undefined') return ''; // client-side
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return 'http://localhost:3000';
+};
+
+const API_BASE_URL = `${getBaseUrl()}/api`;
 
 /**
  * 构建查询字符串
@@ -84,8 +90,9 @@ export async function getContentsByType(
   type: 'product' | 'review',
   params: ContentQueryParams = {}
 ): Promise<ApiResponse<Content[]>> {
-  const queryString = buildQueryString(params);
-  const response = await fetch(`${API_BASE_URL}/contents/${type}${queryString}`);
+  const newParams = { ...params, type };
+  const queryString = buildQueryString(newParams);
+  const response = await fetch(`${API_BASE_URL}/contents${queryString}`);
   
   if (!response.ok) {
     throw new Error(`获取${type === 'product' ? '产品' : '测评'}列表失败: ${response.status}`);
@@ -137,4 +144,4 @@ export async function submitComment(params: CommentSubmitParams): Promise<ApiRes
   }
   
   return response.json();
-} 
+}

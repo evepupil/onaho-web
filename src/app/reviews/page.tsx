@@ -1,8 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 import ContentCard from '@/components/shared/content-card';
 import { getContentsByType } from '@/lib/api';
-import { Content } from '@/types';
 
 export default async function ReviewsPage() {
   // 使用 API 服务获取测评数据

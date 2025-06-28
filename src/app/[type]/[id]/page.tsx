@@ -1,10 +1,9 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getContentDetail, getComments } from '@/lib/api';
+import { getContentDetail } from '@/lib/api';
 import { markdownToHtml } from '@/lib/markdown';
 import { formatDate } from '@/lib/utils';
 import CommentSection from './comment-section';
-import { Comment } from '@/types';
 
 /**
  * 内容详情页面的属性接口

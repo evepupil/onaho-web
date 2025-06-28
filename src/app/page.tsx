@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import ContentCard from '@/components/shared/content-card';
 import { getContentsByType } from '@/lib/api';
 

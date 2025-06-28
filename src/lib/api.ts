@@ -177,7 +177,7 @@ export async function getContentDetail(id: string): Promise<ContentDetailRespons
 }
 
 /**
- * 获取内容的评论列表
+ * 获取评论列表
  */
 export async function getComments(contentId: string): Promise<ApiResponse<Comment[]>> {
   try {

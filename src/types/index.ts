@@ -20,10 +20,22 @@ export interface Content {
  */
 export interface Comment {
   id: string;
-  content: string;
-  nickname: string;
+  content_id: string;  // 关联的文章ID
+  parent_id: string | null;  // 父评论ID，如果是顶级评论则为null
+  nickname: string;  // 评论者昵称
+  content: string;  // 评论内容
+  created_at: string;  // 创建时间
+  replies?: Comment[];  // 子评论/回复
+}
+
+/**
+ * 评论提交参数
+ */
+export interface CommentSubmitParams {
   content_id: string;
-  created_at: string;
+  parent_id?: string | null;
+  nickname: string;
+  content: string;
 }
 
 /**

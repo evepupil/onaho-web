@@ -1,56 +1,100 @@
-import React from 'react';
-import { generateId } from '@/lib/utils';
+"use client";
+
+import React, { useState } from 'react';
+import { submitComment } from '@/lib/api';
+import { CommentSubmitParams } from '@/types';
 
 interface CommentFormProps {
   contentId: string;
+  parentId?: string;
+  onSubmitted?: () => void;
+  placeholder?: string;
+  buttonText?: string;
 }
 
-const CommentForm: React.FC<CommentFormProps> = ({ contentId }) => {
+const CommentForm: React.FC<CommentFormProps> = ({ 
+  contentId, 
+  parentId,
+  onSubmitted,
+  placeholder = "写下您的评论...",
+  buttonText = "发表评论"
+}) => {
+  const [nickname, setNickname] = useState('');
+  const [content, setContent] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!nickname.trim() || !content.trim()) {
+      setError('昵称和评论内容不能为空');
+      return;
+    }
+    
+    setIsSubmitting(true);
+    setError(null);
+    
+    try {
+      const params: CommentSubmitParams = {
+        content_id: contentId,
+        nickname: nickname.trim(),
+        content: content.trim()
+      };
+      
+      if (parentId) {
+        params.parent_id = parentId;
+      }
+      
+      await submitComment(params);
+      
+      // 重置表单
+      setNickname('');
+      setContent('');
+      
+      // 通知父组件评论已提交
+      if (onSubmitted) {
+        onSubmitted();
+      }
+    } catch (err) {
+      console.error('提交评论失败:', err);
+      setError('提交评论失败，请稍后重试');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  
   return (
-    <form className="mb-8">
+    <form onSubmit={handleSubmit} className="bg-gray-50 p-4 rounded-lg">
       <div className="mb-4">
-        <label htmlFor="nickname" className="block text-sm font-medium text-gray-700 mb-1">
-          昵称
-        </label>
         <input
           type="text"
-          id="nickname"
-          name="nickname"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          placeholder="请输入您的昵称"
-          required
+          placeholder="您的昵称"
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+          disabled={isSubmitting}
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="comment" className="block text-sm font-medium text-gray-700 mb-1">
-          评论内容
-        </label>
         <textarea
-          id="comment"
-          name="comment"
-          rows={4}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          placeholder="请输入您的评论"
-          required
-        ></textarea>
+          placeholder={placeholder}
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[100px]"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          disabled={isSubmitting}
+        />
       </div>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <input
-            id="remember"
-            name="remember"
-            type="checkbox"
-            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-          />
-          <label htmlFor="remember" className="ml-2 block text-sm text-gray-700">
-            记住我的信息
-          </label>
-        </div>
+      {error && (
+        <div className="mb-4 text-red-500 text-sm">{error}</div>
+      )}
+      <div className="flex justify-end">
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+          disabled={isSubmitting}
         >
-          提交评论
+          {isSubmitting ? '提交中...' : buttonText}
         </button>
       </div>
     </form>

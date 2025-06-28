@@ -1,10 +1,18 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const Header: React.FC = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-white shadow-sm relative">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -35,7 +43,11 @@ const Header: React.FC = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </button>
-            <button className="md:hidden text-gray-600 hover:text-blue-600">
+            <button 
+              className="md:hidden text-gray-600 hover:text-blue-600"
+              onClick={toggleMobileMenu}
+              aria-label="打开菜单"
+            >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
@@ -43,6 +55,42 @@ const Header: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* 移动端菜单 */}
+      {mobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg z-50">
+          <nav className="flex flex-col py-2">
+            <Link 
+              href="/" 
+              className="px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              首页
+            </Link>
+            <Link 
+              href="/products" 
+              className="px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              产品
+            </Link>
+            <Link 
+              href="/reviews" 
+              className="px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              测评
+            </Link>
+            <Link 
+              href="/about" 
+              className="px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              关于我们
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };

@@ -27,15 +27,15 @@ const ContentCard: React.FC<ContentCardProps> = ({
   rating
 }) => {
   // 截取摘要，限制长度
-  const truncatedExcerpt = excerpt.length > 100 ? `${excerpt.substring(0, 100)}...` : excerpt;
+  const truncatedExcerpt = excerpt.length > 60 ? `${excerpt.substring(0, 60)}...` : excerpt;
   
   // 格式化评分
   const formattedRating = rating ? `${rating}星` : '';
   
   return (
     <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow h-full flex flex-col overflow-hidden border border-gray-100">
-      <Link href={`/${type}/${id}`} className="block flex-grow">
-        {/* 图片容器 */}
+      <Link href={`/${type}/${id}`} className="block h-full flex flex-col">
+        {/* 图片容器 - 固定高度 */}
         <div className="relative h-48 w-full bg-gray-100">
           <Image
             src={coverImage}
@@ -59,38 +59,24 @@ const ContentCard: React.FC<ContentCardProps> = ({
         </div>
         
         {/* 内容区域 */}
-        <div className="p-4 flex-grow flex flex-col">
-          {/* 品牌信息 */}
-          {brand && (
-            <div className="text-xs text-gray-500 mb-1 font-medium">
-              {brand}
-            </div>
-          )}
+        <div className="p-3 flex flex-col flex-grow">
+          {/* 上方固定高度区域 */}
+          <div className="min-h-[60px]">
+            {/* 品牌信息 - 固定高度，减小或移除 */}
+            {brand && (
+              <div className="text-xs text-gray-500 font-medium mb-1">
+                {brand}
+              </div>
+            )}
+            
+            {/* 标题 - 固定高度，一行 */}
+            <h3 className="text-lg font-bold mb-1 truncate text-gray-800">{title}</h3>
+            
+            {/* 摘要 - 固定高度，一行 */}
+            <p className="text-gray-500 text-sm truncate">{truncatedExcerpt}</p>
+          </div>
           
-          {/* 标题 */}
-          <h3 className="text-lg font-bold mb-2 line-clamp-2 text-gray-800">{title}</h3>
-          
-          {/* 标签 - 限制显示最多3个 */}
-          {tags && tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-3">
-              {tags.slice(0, 3).map((tag, index) => (
-                <span 
-                  key={index} 
-                  className="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full"
-                >
-                  {tag}
-                </span>
-              ))}
-              {tags.length > 3 && (
-                <span className="text-xs text-gray-400">+{tags.length - 3}</span>
-              )}
-            </div>
-          )}
-          
-          {/* 摘要 */}
-          <p className="text-gray-500 text-sm mb-4 line-clamp-2">{truncatedExcerpt}</p>
-          
-          {/* 底部信息 */}
+          {/* 底部信息 - 始终在底部 */}
           <div className="flex justify-between items-center text-xs mt-auto pt-2 border-t border-gray-100">
             <span className="text-gray-400">{formatDate(createdAt)}</span>
             <span className="text-blue-600 font-medium flex items-center">

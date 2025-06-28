@@ -1,23 +1,24 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
 import { getContentDetail } from '@/lib/api';
-import { formatDate } from '@/lib/utils';
 import { markdownToHtml } from '@/lib/markdown';
+import { formatDate } from '@/lib/utils';
 import CommentForm from '@/components/comments/comment-form';
 import CommentList from '@/components/comments/comment-list';
 
+/**
+ * 内容详情页面的属性接口
+ */
 interface ContentDetailPageProps {
   params: {
     type: string;
-    slug: string;
+    id: string;
   };
 }
 
 export default async function ContentDetailPage({ params }: ContentDetailPageProps) {
-
-    const { type, slug } = await params;
+  const { type, id } = params;
   
   // 验证类型是否有效
   if (type !== 'product' && type !== 'review') {
@@ -26,7 +27,7 @@ export default async function ContentDetailPage({ params }: ContentDetailPagePro
   
   try {
     // 获取内容详情
-    const response = await getContentDetail(slug);
+    const response = await getContentDetail(id);
     const { content, comments } = response;
     
     // 确保内容类型与URL中的类型匹配
@@ -67,7 +68,7 @@ export default async function ContentDetailPage({ params }: ContentDetailPagePro
         </div>
         
         {/* 内容封面图 */}
-        <div className="relative h-80 w-full mb-8">
+        <div className="relative w-full h-96 mb-8">
           <Image
             src={content.cover_image}
             alt={content.title}
@@ -112,4 +113,4 @@ export default async function ContentDetailPage({ params }: ContentDetailPagePro
     console.error('获取内容详情失败:', error);
     notFound();
   }
-}
+} 

@@ -9,8 +9,8 @@ export default async function Home() {
   const productsResponse = await getContentsByType('product', { limit: 4, sort: 'newest' });
   const reviewsResponse = await getContentsByType('review', { limit: 4, sort: 'newest' });
   
-  const products = productsResponse.data;
-  const reviews = reviewsResponse.data;
+  const products = productsResponse?.data || [];
+  const reviews = reviewsResponse?.data || [];
 
   return (
     <div>
@@ -46,20 +46,25 @@ export default async function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.map((product) => (
-              <ContentCard
-                key={product.id}
-                id={product.id}
-                slug={product.slug}
-                title={product.title}
-                excerpt={product.content}
-                coverImage={product.cover_image}
-                createdAt={product.created_at}
-                type={product.type}
-                brand={product.brand}
-                tags={product.tags}
-              />
-            ))}
+            {products && products.length > 0 ? (
+              products.map((product) => (
+                <ContentCard
+                  key={product.id}
+                  id={product.id}
+                  title={product.title}
+                  excerpt={product.content}
+                  coverImage={product.cover_image}
+                  createdAt={product.created_at}
+                  type={product.type}
+                  brand={product.brand}
+                  tags={product.tags}
+                />
+              ))
+            ) : (
+              <div className="col-span-4 text-center py-10">
+                <p className="text-gray-500">暂无产品数据</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -74,21 +79,26 @@ export default async function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {reviews.map((review) => (
-              <ContentCard
-                key={review.id}
-                id={review.id}
-                slug={review.slug}
-                title={review.title}
-                excerpt={review.content}
-                coverImage={review.cover_image}
-                createdAt={review.created_at}
-                type={review.type}
-                brand={review.brand}
-                tags={review.tags}
-                rating={review.rating}
-              />
-            ))}
+            {reviews && reviews.length > 0 ? (
+              reviews.map((review) => (
+                <ContentCard
+                  key={review.id}
+                  id={review.id}
+                  title={review.title}
+                  excerpt={review.content}
+                  coverImage={review.cover_image}
+                  createdAt={review.created_at}
+                  type={review.type}
+                  brand={review.brand}
+                  tags={review.tags}
+                  rating={review.rating}
+                />
+              ))
+            ) : (
+              <div className="col-span-4 text-center py-10">
+                <p className="text-gray-500">暂无测评数据</p>
+              </div>
+            )}
           </div>
         </div>
       </section>

@@ -79,7 +79,6 @@ export default async function ProductsPage() {
           <ContentCard
             key={product.id}
             id={product.id}
-            slug={product.slug}
             title={product.title}
             excerpt={product.content}
             coverImage={product.cover_image}

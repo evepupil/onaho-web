@@ -65,7 +65,6 @@ export default async function ReviewsPage() {
           <ContentCard
             key={review.id}
             id={review.id}
-            slug={review.slug}
             title={review.title}
             excerpt={review.content}
             coverImage={review.cover_image}

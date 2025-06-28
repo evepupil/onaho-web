@@ -5,7 +5,6 @@ import { formatDate } from '@/lib/utils';
 
 interface ContentCardProps {
   id: string;
-  slug: string;
   title: string;
   excerpt: string;
   coverImage: string;
@@ -18,7 +17,6 @@ interface ContentCardProps {
 
 const ContentCard: React.FC<ContentCardProps> = ({
   id,
-  slug,
   title,
   excerpt,
   coverImage,
@@ -36,7 +34,7 @@ const ContentCard: React.FC<ContentCardProps> = ({
   
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
-      <Link href={`/${type}/${slug}`} className="block flex-grow">
+      <Link href={`/${type}/${id}`} className="block flex-grow">
         <div className="relative h-48 w-full">
           <Image
             src={coverImage}

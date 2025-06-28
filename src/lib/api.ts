@@ -52,7 +52,7 @@ interface ContentQueryParams {
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') return ''; // client-side
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return 'http://localhost:3000';
+  return 'http://localhost:3000'; // 在服务器端渲染时使用完整的本地URL
 };
 
 const API_BASE_URL = `${getBaseUrl()}/api`;
@@ -73,14 +73,37 @@ function buildQueryString(params: Record<string, any>): string {
  * 获取所有内容列表
  */
 export async function getAllContents(params: ContentQueryParams = {}): Promise<ApiResponse<Content[]>> {
-  const queryString = buildQueryString(params);
-  const response = await fetch(`${API_BASE_URL}/contents${queryString}`);
-  
-  if (!response.ok) {
-    throw new Error(`获取内容列表失败: ${response.status}`);
+  try {
+    const queryString = buildQueryString(params);
+    const baseUrl = getBaseUrl();
+    const url = `${baseUrl}/api/contents${queryString}`;
+    
+    console.log(`尝试获取所有内容列表，URL: ${url}`);
+    
+    const response = await fetch(url, {
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
+    
+    if (!response.ok) {
+      console.error(`获取内容列表失败: ${response.status}`);
+      throw new Error(`获取内容列表失败: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('获取内容列表出错:', error);
+    return {
+      data: [],
+      pagination: {
+        total: 0,
+        page: 1,
+        limit: 10,
+        totalPages: 0
+      }
+    };
   }
-  
-  return response.json();
 }
 
 /**
@@ -90,58 +113,126 @@ export async function getContentsByType(
   type: 'product' | 'review',
   params: ContentQueryParams = {}
 ): Promise<ApiResponse<Content[]>> {
-  const newParams = { ...params, type };
-  const queryString = buildQueryString(newParams);
-  const response = await fetch(`${API_BASE_URL}/contents${queryString}`);
-  
-  if (!response.ok) {
-    throw new Error(`获取${type === 'product' ? '产品' : '测评'}列表失败: ${response.status}`);
+  try {
+    const newParams = { ...params, type };
+    const queryString = buildQueryString(newParams);
+    const baseUrl = getBaseUrl();
+    const url = `${baseUrl}/api/contents${queryString}`;
+    
+    console.log(`尝试获取内容列表，URL: ${url}`);
+    
+    const response = await fetch(url, {
+      cache: 'no-store', // 禁用缓存
+      next: { revalidate: 0 } // 禁用Next.js的缓存
+    });
+    
+    if (!response.ok) {
+      console.error(`获取${type}列表失败: ${response.status}`);
+      throw new Error(`获取${type === 'product' ? '产品' : '测评'}列表失败: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`获取${type}列表出错:`, error);
+    // 返回一个空的响应，避免整个页面崩溃
+    return {
+      data: [],
+      pagination: {
+        total: 0,
+        page: 1,
+        limit: 10,
+        totalPages: 0
+      }
+    };
   }
-  
-  return response.json();
 }
 
 /**
  * 获取内容详情
+ * @param id 内容ID
  */
-export async function getContentDetail(slug: string): Promise<ContentDetailResponse> {
-  const response = await fetch(`${API_BASE_URL}/contents/${slug}`);
-  
-  if (!response.ok) {
-    throw new Error(`获取内容详情失败: ${response.status}`);
+export async function getContentDetail(id: string): Promise<ContentDetailResponse> {
+  try {
+    const baseUrl = getBaseUrl();
+    const url = `${baseUrl}/api/contents/${id}`;
+    console.log(`尝试获取内容详情，URL: ${url}`);
+    
+    const response = await fetch(url, {
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
+    
+    if (!response.ok) {
+      console.error(`获取内容详情失败: ${response.status}`);
+      throw new Error(`获取内容详情失败: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`获取内容详情出错:`, error);
+    throw error; // 在详情页面，我们需要抛出错误以便显示404页面
   }
-  
-  return response.json();
 }
 
 /**
  * 获取内容的评论列表
  */
 export async function getComments(contentId: string): Promise<ApiResponse<Comment[]>> {
-  const response = await fetch(`${API_BASE_URL}/comments?content_id=${contentId}`);
-  
-  if (!response.ok) {
-    throw new Error(`获取评论列表失败: ${response.status}`);
+  try {
+    const baseUrl = getBaseUrl();
+    const url = `${baseUrl}/api/comments?content_id=${contentId}`;
+    console.log(`尝试获取评论列表，URL: ${url}`);
+    
+    const response = await fetch(url, {
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
+    
+    if (!response.ok) {
+      console.error(`获取评论列表失败: ${response.status}`);
+      throw new Error(`获取评论列表失败: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('获取评论列表出错:', error);
+    return {
+      data: [],
+      count: 0
+    };
   }
-  
-  return response.json();
 }
 
 /**
  * 提交评论
  */
 export async function submitComment(params: CommentSubmitParams): Promise<ApiResponse<Comment>> {
-  const response = await fetch(`${API_BASE_URL}/comments`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(params)
-  });
-  
-  if (!response.ok) {
-    throw new Error(`提交评论失败: ${response.status}`);
+  try {
+    const baseUrl = getBaseUrl();
+    const url = `${baseUrl}/api/comments`;
+    console.log(`尝试提交评论，URL: ${url}`);
+    
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params),
+      cache: 'no-store'
+    });
+    
+    if (!response.ok) {
+      console.error(`提交评论失败: ${response.status}`);
+      throw new Error(`提交评论失败: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('提交评论出错:', error);
+    throw error;
   }
-  
-  return response.json();
 }

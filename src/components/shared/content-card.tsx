@@ -23,7 +23,6 @@ const ContentCard: React.FC<ContentCardProps> = ({
   createdAt,
   type,
   brand,
-  tags,
   rating
 }) => {
   // 截取摘要，限制长度

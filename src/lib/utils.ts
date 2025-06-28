@@ -60,7 +60,7 @@ export function isValidUrl(url: string): boolean {
   try {
     new URL(url);
     return true;
-  } catch (e) {
+  } catch (_) {
     return false;
   }
 }
@@ -70,7 +70,7 @@ export function isValidUrl(url: string): boolean {
  * @param func - 要执行的函数
  * @param wait - 等待时间（毫秒）
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {

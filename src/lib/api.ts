@@ -1,4 +1,4 @@
-import { Content, Comment, PaginatedResult } from '@/types';
+import { Content, Comment } from '@/types';
 
 /**
  * API 响应接口
@@ -55,15 +55,13 @@ const getBaseUrl = () => {
   return 'http://localhost:3000'; // 在服务器端渲染时使用完整的本地URL
 };
 
-const API_BASE_URL = `${getBaseUrl()}/api`;
-
 /**
  * 构建查询字符串
  */
-function buildQueryString(params: Record<string, any>): string {
+function buildQueryString(params: Record<string, unknown>): string {
   const query = Object.entries(params)
-    .filter(([_, value]) => value !== undefined && value !== null)
-    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+    .filter(([, value]) => value !== undefined && value !== null)
+    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`)
     .join('&');
   
   return query ? `?${query}` : '';
@@ -74,7 +72,7 @@ function buildQueryString(params: Record<string, any>): string {
  */
 export async function getAllContents(params: ContentQueryParams = {}): Promise<ApiResponse<Content[]>> {
   try {
-    const queryString = buildQueryString(params);
+    const queryString = buildQueryString(params as Record<string, unknown>);
     const baseUrl = getBaseUrl();
     const url = `${baseUrl}/api/contents${queryString}`;
     
@@ -115,7 +113,7 @@ export async function getContentsByType(
 ): Promise<ApiResponse<Content[]>> {
   try {
     const newParams = { ...params, type };
-    const queryString = buildQueryString(newParams);
+    const queryString = buildQueryString(newParams as Record<string, unknown>);
     const baseUrl = getBaseUrl();
     const url = `${baseUrl}/api/contents${queryString}`;
     

@@ -52,7 +52,7 @@ export default function SearchPage() {
         <h1 className="text-3xl font-bold mb-2">搜索结果</h1>
         {query && (
           <p className="text-gray-600">
-            搜索 "<span className="font-medium">{query}</span>" 的结果
+            搜索 &ldquo;<span className="font-medium">{query}</span>&rdquo; 的结果
           </p>
         )}
       </div>
@@ -88,7 +88,7 @@ export default function SearchPage() {
           <h2 className="text-xl font-semibold mb-2">未找到匹配结果</h2>
           <p className="text-gray-600">
             {query 
-              ? `没有找到与 "${query}" 相关的内容，请尝试其他关键词。` 
+              ? `没有找到与 &ldquo;${query}&rdquo; 相关的内容，请尝试其他关键词。` 
               : '请输入搜索关键词以查找内容。'
             }
           </p>

@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import { getContentDetail, getComments } from '@/lib/api';
 import { markdownToHtml } from '@/lib/markdown';
 import { formatDate } from '@/lib/utils';
@@ -41,7 +40,7 @@ export default async function ContentDetailPage({ params }: ContentDetailPagePro
     return (
       <div className="container mx-auto px-4 py-8">
         {/* 面包屑导航 */}
-        <div className="mb-6 text-sm text-gray-500">
+        <div className="mb-4 text-sm text-gray-500">
           <Link href="/" className="hover:text-blue-600">首页</Link>
           <span className="mx-2">/</span>
           <Link href={`/${type === 'product' ? 'products' : 'reviews'}`} className="hover:text-blue-600">
@@ -51,10 +50,13 @@ export default async function ContentDetailPage({ params }: ContentDetailPagePro
           <span>{content.title}</span>
         </div>
         
-        {/* 内容标题和元数据 */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-4">{content.title}</h1>
-          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+        {/* 内容标题 */}
+        <h1 className="text-3xl font-bold mb-4">{content.title}</h1>
+        
+        {/* 元数据和标签在同一行 */}
+        <div className="flex flex-wrap items-center justify-between text-sm text-gray-600 mb-4">
+          {/* 左侧元数据 */}
+          <div className="flex items-center gap-4">
             <div>发布时间: {formatDate(content.created_at)}</div>
             {content.brand && <div>品牌: {content.brand}</div>}
             {content.rating && type === 'review' && (
@@ -65,33 +67,24 @@ export default async function ContentDetailPage({ params }: ContentDetailPagePro
               </div>
             )}
           </div>
+          
+          {/* 右侧标签 */}
+          {content.tags && content.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {content.tags.map((tag, index) => (
+                <span 
+                  key={index} 
+                  className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full text-xs"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
         
-        {/* 内容封面图 */}
-        <div className="relative w-full h-96 mb-8">
-          <Image
-            src={content.cover_image}
-            alt={content.title}
-            fill
-            className="object-cover rounded-lg"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-            priority
-          />
-        </div>
-        
-        {/* 标签 */}
-        {content.tags && content.tags.length > 0 && (
-          <div className="mb-8 flex flex-wrap gap-2">
-            {content.tags.map((tag, index) => (
-              <span 
-                key={index} 
-                className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+        {/* 分隔线 */}
+        <hr className="border-t border-gray-200 mb-6" />
         
         {/* 内容主体 */}
         <div 

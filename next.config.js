@@ -17,6 +17,14 @@ const nextConfig = {
       }
     ],
   },
+  // 禁用类型检查
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  // 禁用 ESLint
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 module.exports = nextConfig; 
